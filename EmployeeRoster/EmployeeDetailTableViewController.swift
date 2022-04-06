@@ -12,14 +12,27 @@ class EmployeeDetailTableViewController: UITableViewController, UITextFieldDeleg
     @IBOutlet var employeeTypeLabel: UILabel!
     @IBOutlet var saveBarButtonItem: UIBarButtonItem!
     
+    @IBOutlet var dobDatePicker: UIDatePicker!
+
     weak var delegate: EmployeeDetailTableViewControllerDelegate?
     var employee: Employee?
+    var isEditingBirthdayVisible: Bool = false {
+        didSet {
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            print("Hello")
+        }
+    }
     
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         updateView()
         updateSaveButtonState()
+        updateBirthdayDatePicker()
     }
     
     func updateView() {
@@ -33,6 +46,15 @@ class EmployeeDetailTableViewController: UITableViewController, UITextFieldDeleg
             employeeTypeLabel.textColor = .label
         } else {
             navigationItem.title = "New Employee"
+        }
+    }
+    
+    func updateBirthdayDatePicker() {
+        
+        if isEditingBirthdayVisible {
+            dobDatePicker.isHidden = false
+        } else {
+            dobDatePicker.isHidden = true
         }
     }
     
@@ -57,5 +79,4 @@ class EmployeeDetailTableViewController: UITableViewController, UITextFieldDeleg
     @IBAction func nameTextFieldDidChange(_ sender: UITextField) {
         updateSaveButtonState()
     }
-
 }
